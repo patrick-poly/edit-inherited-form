@@ -58,10 +58,21 @@ Function onInvoke
 				End if 
 			End if 
 			If ($okEdit)
+				ARRAY TEXT:C222($formNames; 0)
 				If ($tablePtr#Null:C1517)
-					FORM EDIT:C1749($tablePtr->; $formName)
+					FORM GET NAMES:C1167($tablePtr->; $formNames; $formName; *)
+					If (Size of array:C274($formNames)#0)
+						FORM EDIT:C1749($tablePtr->; $formName)
+					Else 
+						ALERT:C41("Form ["+Table name:C256($tablePtr)+"]"+$formName+" not found")
+					End if 
 				Else 
-					FORM EDIT:C1749($formName)
+					FORM GET NAMES:C1167($formNames; $formName; *)
+					If (Size of array:C274($formNames)#0)
+						FORM EDIT:C1749($formName)
+					Else 
+						ALERT:C41("Project Form "+$formName+" not found")
+					End if 
 				End if 
 			End if 
 		End if 
